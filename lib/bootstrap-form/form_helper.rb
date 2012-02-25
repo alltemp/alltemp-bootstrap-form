@@ -5,41 +5,42 @@ module  ActionView
       BOOTSTRAP_OPTIONS = [:label, :hint].freeze
 
       def bootstrap_text_field(object_name, method, options={})
-        bootstrap_clearfix_wrap(object_name, method, text_field(object_name, method, extract_input_options(options)), options)
+        bootstrap_controlgroup_wrap(object_name, method, text_field(object_name, method, extract_input_options(options)), options)
       end
 
       def bootstrap_email_field(object_name, method, options={})
-        bootstrap_clearfix_wrap(object_name, method, email_field(object_name, method, extract_input_options(options)), options)
+        bootstrap_controlgroup_wrap(object_name, method, email_field(object_name, method, extract_input_options(options)), options)
       end
 
       def bootstrap_password_field(object_name, method, options={})
-        bootstrap_clearfix_wrap(object_name, method, password_field(object_name, method, extract_input_options(options)), options)
+        bootstrap_controlgroup_wrap(object_name, method, password_field(object_name, method, extract_input_options(options)), options)
       end
 
       def bootstrap_collection_select(object_name, method, collection, value_method, text_method, options = {}, html_options = {})
-        bootstrap_clearfix_wrap(object_name, method, collection_select(object_name, method, collection, value_method, text_method, extract_input_options(options), html_options), options)
+        bootstrap_controlgroup_wrap(object_name, method, collection_select(object_name, method, collection, value_method, text_method, extract_input_options(options), html_options), options)
       end
 
       def bootstrap_select(object_name, method, choices, options, html_options)
-        bootstrap_clearfix_wrap(object_name, method, select(object_name, method, choices, extract_input_options(options), html_options), options)
+        bootstrap_controlgroup_wrap(object_name, method, select(object_name, method, choices, extract_input_options(options), html_options), options)
       end
 
       def bootstrap_file_field(object_name, method, options={})
-        bootstrap_clearfix_wrap(object_name, method, file_field(object_name, method, extract_input_options(options)), options)
+        bootstrap_controlgroup_wrap(object_name, method, file_field(object_name, method, extract_input_options(options)), options)
       end
 
       def bootstrap_text_area(object_name, method, options={})
-        bootstrap_clearfix_wrap(object_name, method, text_area(object_name, method, extract_input_options(options)), options)
+        bootstrap_controlgroup_wrap(object_name, method, text_area(object_name, method, extract_input_options(options)), options)
       end
 
-      def bootstrap_clearfix_wrap(object_name, method, content, options={})
+      def bootstrap_controlgroup_wrap(object_name, method, content, options={})
         error_messages = options[:object].errors[method]
-        clearfix_tag = error_messages.blank? ? 'clearfix' : 'clearfix error'
+        controlgroup_tag = error_messages.blank? ? 'control-group' : 'control-group error'
         inline_help = inline_help_tag(error_messages.presence || options[:hint])
 
-        content_tag(:div, label(object_name, method, options[:label]) +
-            content_tag(:div, content + inline_help, :class => 'input'),
-            :class => clearfix_tag)
+        content_tag(:div,
+          label(object_name, method, options[:label], :class => 'control-label') +
+          content_tag(:div, content + inline_help, :class => 'controls'),
+          :class => controlgroup_tag)
       end
 
       def inline_help_tag(messages)
