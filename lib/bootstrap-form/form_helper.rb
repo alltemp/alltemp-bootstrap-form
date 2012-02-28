@@ -39,7 +39,8 @@ module  ActionView
 
         content_tag(:div,
           label(object_name, method, options[:label], :class => 'control-label') +
-          content_tag(:div, content + inline_help, :class => 'controls'),
+          content_tag(:div, content + inline_help, :class => 'controls') +
+          help_block_tag(options[:help_block]),
           :class => controlgroup_tag)
       end
 
@@ -48,6 +49,12 @@ module  ActionView
         return '' if messages.empty?
         message_span = ActiveSupport::SafeBuffer.new(" #{messages.to_sentence}")
         content_tag(:span, message_span, :class => 'help-inline')
+      end
+
+      def help_block_tag(help)
+        if !help.blank?
+          content_tag(:div, help, :class => 'controls help-block')
+        end
       end
 
       private
