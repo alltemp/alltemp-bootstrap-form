@@ -32,6 +32,10 @@ module  ActionView
         bootstrap_controlgroup_wrap(object_name, method, text_area(object_name, method, extract_input_options(options)), options)
       end
 
+      def bootstrap_check_box(object_name, method, options={}, checked_value = "1", unchecked_value = "0")
+        bootstrap_controlgroup_wrap(object_name, method, check_box(object_name, method, extract_input_options(options), checked_value, unchecked_value), options)
+      end
+
       def bootstrap_controlgroup_wrap(object_name, method, content, options={})
         error_messages = options[:object].errors[method]
         controlgroup_tag = error_messages.blank? ? 'control-group' : 'control-group error'
@@ -94,5 +98,9 @@ class ActionView::Helpers::FormBuilder #:nodoc:
 
   def bootstrap_text_area(method, options={})
     @template.bootstrap_text_area(@object_name, method, objectify_options(options))
+  end
+
+  def bootstrap_check_box(method, options={}, checked_value = "1", unchecked_value = "0")
+    @template.bootstrap_check_box(@object_name, method, objectify_options(options), checked_value, unchecked_value)
   end
 end

@@ -150,6 +150,15 @@ class FormHelperTest < ActionView::TestCase
     assert_equal html, bootstrap_text_area(:post, :description, options)
   end
 
+  def test_bootstrap_check_box
+    html, check_box = mock, mock
+    options = { :object => mock }
+
+    mock(self).check_box(:post, :description, options) { check_box }
+    mock(self).bootstrap_controlgroup_wrap(:post, :description, check_box, options.dup) { html }
+    assert_equal html, bootstrap_check_box(:post, :description, options)
+  end
+
   def test_ignore_bootstrap_options
     html, text_area = mock, mock
     options = { :object => mock, :label => "Custom", :hint => "be careful" }
